@@ -44,3 +44,7 @@
 .project-action span{color:inherit;font-size:13px;transition:transform .2s}
 .project-action:hover,.project-action:focus-visible{background:var(--lime);border-color:var(--lime);color:#171913;transform:translateY(-2px);outline:none}
 .project-action:hover span{transform:translate(2px,-2px)}
+
+/* Make the BFIT project artwork itself an invisible, keyboard-accessible link. */
+.project-visual-link{position:absolute;inset:0;z-index:2;display:block;color:inherit;text-decoration:none}
+.project-visual-link:focus-visible{outline:2px solid var(--lime);outline-offset:-6px}
