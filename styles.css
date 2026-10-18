@@ -48,3 +48,6 @@
 /* Make the BFIT project artwork itself an invisible, keyboard-accessible link. */
 .project-visual-link{position:absolute;inset:0;z-index:2;display:block;color:inherit;text-decoration:none}
 .project-visual-link:focus-visible{outline:2px solid var(--lime);outline-offset:-6px}
+
+.project-visual-image{padding:0}
+.project-preview-image{display:block;width:100%;height:100%;object-fit:fill}
