@@ -40,3 +40,7 @@
 .contact-action-copy b{font:600 10px var(--sans);color:var(--ink);overflow-wrap:anywhere}
 .contact-action-arrow{margin-left:auto;align-self:flex-start;color:var(--lime);font-size:13px;line-height:1}
 @media(max-width:680px){.contact-actions{grid-template-columns:1fr;gap:8px}.contact-action{padding:12px 13px}.contact-action-copy b{font-size:12px}}
+.project-action,.project-links .project-action{display:inline-flex;align-items:center;gap:16px;margin-top:14px;padding:9px 12px;border:1px solid rgba(209,250,97,.42);background:rgba(209,250,97,.06);color:var(--lime);font:8px var(--mono);letter-spacing:.08em;text-decoration:none;transition:background .2s,color .2s,border-color .2s,transform .2s}
+.project-action span{color:inherit;font-size:13px;transition:transform .2s}
+.project-action:hover,.project-action:focus-visible{background:var(--lime);border-color:var(--lime);color:#171913;transform:translateY(-2px);outline:none}
+.project-action:hover span{transform:translate(2px,-2px)}
