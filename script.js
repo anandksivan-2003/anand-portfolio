@@ -27,6 +27,74 @@ function observeReveals(root = document) {
 
 observeReveals();
 
+const heroRole = document.querySelector('.hero-role-rotator');
+if (heroRole) {
+  const heroRoleLead = heroRole.querySelector('.hero-role-lead');
+  const heroRoleLine = heroRole.querySelector('.hero-role-line');
+  const rolePhrases = [
+    { lead: 'Software', line: 'developer.' },
+    { lead: 'Full-stack', line: 'developer.' },
+  ];
+  let activeRole = 0;
+  let characterIndex = 0;
+
+  const typeLead = () => {
+    const phrase = rolePhrases[activeRole];
+    heroRole.classList.add('is-typing-lead');
+    heroRole.classList.remove('is-typing-line');
+    if (characterIndex < phrase.lead.length) {
+      characterIndex += 1;
+      heroRoleLead.textContent = phrase.lead.slice(0, characterIndex);
+      window.setTimeout(typeLead, 95);
+      return;
+    }
+    characterIndex = 0;
+    window.setTimeout(typeLine, 180);
+  };
+
+  const typeLine = () => {
+    const phrase = rolePhrases[activeRole];
+    heroRole.classList.remove('is-typing-lead');
+    heroRole.classList.add('is-typing-line');
+    if (characterIndex < phrase.line.length) {
+      characterIndex += 1;
+      heroRoleLine.textContent = phrase.line.slice(0, characterIndex);
+      window.setTimeout(typeLine, 75);
+      return;
+    }
+    heroRole.classList.remove('is-typing-line');
+    window.setTimeout(eraseLine, 1200);
+  };
+
+  const eraseLead = () => {
+    heroRole.classList.add('is-typing-lead');
+    if (characterIndex > 0) {
+      characterIndex -= 1;
+      heroRoleLead.textContent = rolePhrases[activeRole].lead.slice(0, characterIndex);
+      window.setTimeout(eraseLead, 42);
+      return;
+    }
+    activeRole = (activeRole + 1) % rolePhrases.length;
+    window.setTimeout(typeLead, 260);
+  };
+
+  const eraseLine = () => {
+    heroRole.classList.add('is-typing-line');
+    if (heroRoleLine.textContent.length > 0) {
+      heroRoleLine.textContent = heroRoleLine.textContent.slice(0, -1);
+      window.setTimeout(eraseLine, 42);
+      return;
+    }
+    heroRole.classList.remove('is-typing-line');
+    characterIndex = rolePhrases[activeRole].lead.length;
+    window.setTimeout(eraseLead, 100);
+  };
+
+  heroRoleLead.textContent = '';
+  heroRoleLine.textContent = '';
+  window.setTimeout(typeLead, 260);
+}
+
 // Owner-managed additions: add project objects here, then commit and push the update.
 // Fields: title, category, year, description, technologies, demoUrl, sourceUrl.
 const additionalProjects = [];
@@ -104,6 +172,70 @@ if (additionalProjects.length) {
   });
 }
 
+// Verified certificates displayed in their matching education or training timeline entries.
+// timelineId values come from the data-timeline-id attributes in index.html.
+// Fields: title, category (EXPERIENCE, COURSE, or WORKSHOP), issuer, year, file, timelineId.
+const additionalCertificates = [
+  {
+    title: 'Certificate of Completion — Data Science & Artificial Intelligence',
+    category: 'COURSE',
+    issuer: 'AVODHA',
+    year: '2026',
+    file: 'assets/certificates/avodha-data-science-ai.pdf',
+    timelineId: 'data-science-ai'
+  },
+  {
+    title: 'AI/ML Foundations with Python',
+    category: 'COURSE',
+    issuer: 'Elixir Learning Hub',
+    year: '2025',
+    file: 'assets/certificates/elixir-ai-ml-foundations-python.pdf',
+    timelineId: 'ai-ml-training'
+  },
+  {
+    title: 'Data Science Workshop — Analyze to Succeed',
+    category: 'WORKSHOP',
+    issuer: 'Futurix Edu Tech Academy',
+    year: '2025',
+    file: 'assets/certificates/futurix-data-science-workshop.pdf',
+    timelineId: 'futurix-workshop'
+  }
+];
+const certificateFilePattern = /^assets\/certificates\/[a-z0-9][a-z0-9._-]*\.pdf$/i;
+
+additionalCertificates
+  .filter((certificate) => certificateFilePattern.test(certificate.file || ''))
+  .forEach((certificate) => {
+    const timelineItem = [...document.querySelectorAll('[data-timeline-id]')]
+      .find((item) => item.dataset.timelineId === certificate.timelineId);
+    const timelineContent = timelineItem?.querySelector('.timeline-content');
+    if (!timelineContent) return;
+
+    const certificateSlot = timelineItem.querySelector('[data-certificate-slot]');
+    const linkList = certificateSlot || timelineContent;
+    let links = linkList.querySelector('.timeline-certificates');
+    if (!links) {
+      links = document.createElement('div');
+      links.className = 'timeline-certificates';
+      linkList.append(links);
+    }
+    certificateSlot?.classList.add('has-certificate');
+    certificateSlot?.querySelector('.certificate-slot-empty')?.remove();
+
+    const viewLink = document.createElement('a');
+    viewLink.href = certificate.file;
+    viewLink.target = '_blank';
+    viewLink.rel = 'noopener noreferrer';
+    viewLink.setAttribute('aria-label', `View ${certificate.category || 'certificate'}: ${certificate.title || 'certificate'}`);
+    viewLink.textContent = `View ${String(certificate.category || 'certificate').toLowerCase()} certificate ↗`;
+    const downloadLink = document.createElement('a');
+    downloadLink.href = certificate.file;
+    downloadLink.setAttribute('download', '');
+    downloadLink.setAttribute('aria-label', `Download ${certificate.title || 'certificate'}`);
+    downloadLink.textContent = 'Download ↓';
+    links.append(viewLink, downloadLink);
+  });
+
 const progressBar = document.querySelector('.scroll-progress span');
 let progressFrame = 0;
 const updateScrollProgress = () => {
@@ -121,11 +253,20 @@ updateScrollProgress();
 
 const menuButton = document.querySelector('.menu-toggle');
 const navigation = document.querySelector('.nav');
-menuButton.addEventListener('click', () => {
-  const isOpen = navigation.classList.toggle('open');
+const setNavigationOpen = (isOpen) => {
+  navigation.classList.toggle('open', isOpen);
   menuButton.setAttribute('aria-expanded', String(isOpen));
+  menuButton.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
+};
+
+menuButton.addEventListener('click', () => {
+  setNavigationOpen(menuButton.getAttribute('aria-expanded') !== 'true');
 });
-navigation.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => {
-  navigation.classList.remove('open');
-  menuButton.setAttribute('aria-expanded', 'false');
-}));
+navigation.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setNavigationOpen(false)));
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && menuButton.getAttribute('aria-expanded') === 'true') {
+    setNavigationOpen(false);
+    menuButton.focus();
+  }
+});
+

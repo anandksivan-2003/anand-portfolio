@@ -32,6 +32,12 @@ git commit -m "Add portfolio project"
 git push
 ```
 
+## Certificates
+
+Verified course and workshop PDFs are stored in `assets/certificates/` and linked from their matching entries in the experience and education timeline. The AVODHA, Elixir Learning Hub, and Futurix certificates are listed in the `additionalCertificates` array in `script.js`; each card shows view and download links.
+
+To add another certificate, copy its PDF into `assets/certificates/` and add an entry with a matching `timelineId`. Supported categories are `EXPERIENCE`, `COURSE`, and `WORKSHOP`. Existing timeline IDs include `software-trainee`, `ai-ml-intern`, `bca`, `data-science-ai`, `ai-ml-training`, and `futurix-workshop`. Keep only documents you are comfortable sharing publicly, and redact personal identifiers from certificates before publishing.
+
 ## Update before publishing
 
 - Replace or expand project descriptions with verified live demos, screenshots, and source links when available.
