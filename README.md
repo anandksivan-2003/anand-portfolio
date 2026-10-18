@@ -6,8 +6,34 @@ A responsive, motion-rich portfolio for software and full-stack developer opport
 
 Open `index.html` in a browser, or serve this folder with any static web server. The CV download is included as `Anand-K-Sivan-CV.pdf`, and the portrait is in `assets/anand-k-sivan.jpg`.
 
+## Add a project
+
+Open `script.js` and add a project object to the `additionalProjects` array near the top. Use your real project details and URLs; leave `demoUrl` or `sourceUrl` as an empty string if you do not have one.
+
+```js
+const additionalProjects = [
+  {
+    title: "Project name",
+    category: "WEB APPLICATION",
+    year: "2026",
+    description: "What the project does and what you built.",
+    technologies: ["Next.js", "Node.js", "PostgreSQL"],
+    demoUrl: "https://example.com",
+    sourceUrl: "https://github.com/your-account/project-name"
+  }
+];
+```
+
+The portfolio builds a card from each entry, adds the technologies, and shows demo or source links when supplied. To back up an update to the private GitHub repository, run:
+
+```powershell
+git add -A
+git commit -m "Add portfolio project"
+git push
+```
+
 ## Update before publishing
 
-- Replace or expand the two project descriptions with verified live demos, screenshots, and source links when available.
+- Replace or expand project descriptions with verified live demos, screenshots, and source links when available.
 - Confirm the contact details and CV are the intended public versions.
 - The hero and scroll animations are native CSS motion, not a separate MP4. Add a narrated showreel later if a standalone video deliverable is needed.
