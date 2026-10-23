@@ -1,6 +1,6 @@
 # Anand K Sivan — Portfolio
 
-A responsive, motion-rich portfolio for software and full-stack developer opportunities. The opening hero puts Anand's portrait first and frames it with lightweight AI-inspired motion. Scroll reveals, staggered sections, and a reading progress line add movement throughout the page.
+A responsive, motion-rich portfolio for software and full-stack developer opportunities. It showcases Anand's web and mobile development projects, experience, and certificates. The opening hero puts Anand's portrait first and frames it with lightweight AI-inspired motion. Scroll reveals, staggered sections, and a reading progress line add movement throughout the page.
 
 ## Run locally
 
